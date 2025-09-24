@@ -1,0 +1,82 @@
+<mjml>
+  <mj-head>
+    <mj-title>Welcome to {{AppName}} - Registration Successful!</mj-title>
+    <mj-attributes>
+      <mj-section padding="0px"></mj-section>
+      <mj-class name="button" font-family="Arial, sans-serif" background-color="#006195" color="#ffffff" height="40px" text-transform="uppercase" font-size="16px" text-decoration="none" padding="10px 20px" border-radius="4px"></mj-class>
+      <mj-class name="footer-text" font-family="Arial, sans-serif" color="#666666" font-size="12px" line-height="18px"></mj-class>
+      <mj-class name="body-text" font-family="Arial, sans-serif" color="#111111" font-size="16px" line-height="24px" align="left"></mj-class>
+      <mj-class name="headline-text" font-family="Arial, sans-serif" color="#ffffff" font-size="22px" font-weight="bold" line-height="32px" align="center"></mj-class>
+      <mj-class name="social-element" margin="0 1rem"></mj-class>
+    </mj-attributes>
+    <mj-font name="Arial" href="https://fonts.googleapis.com/css?family=Arial"></mj-font>
+    <mj-style inline="inline">
+      .confirmation-box {
+        background-color: #f0f9ff;
+        border-left: 4px solid #06c;
+        padding: 15px;
+        border-radius: 4px;
+      }
+
+      .footer-link {
+        color: #038AD9 !important;
+        text-decoration: none;
+      }
+
+      .footer-link:hover {
+        text-decoration: underline;
+      }
+
+      .welcome-banner {
+        background-color: #006195;
+        color: white;
+        padding: 20px;
+        border-radius: 6px;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#ffffff">
+    <!-- Header Section -->
+    [[header]]
+    <mj-include path="./shared/header.mjml" />
+
+    <!-- Main Content -->
+    <mj-section padding="20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          Dear {{name}},
+          <br /><br />
+          Thank you for registering with {{AppName}}. We're excited to have you join our community!
+          <br /><br />
+          Your account has been successfully created and is now ready to use.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Confirmation Box -->
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text mj-class="body-text" css-class="confirmation-box">
+          <strong>Account Information:</strong><br />
+          Username: {{username}}<br />
+          Email: {{email}}<br />
+          accountType: {{accountType}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Additional Information -->
+    <mj-section>
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          If you have any questions or need assistance, don't hesitate to contact our support team. We're here to help you make the most of your experience with {{AppName}}.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer Section -->
+    <mj-include path="./shared/footer.mjml" />
+    [[footer]]
+  </mj-body>
+</mjml>

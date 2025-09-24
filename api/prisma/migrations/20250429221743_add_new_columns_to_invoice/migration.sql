@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "Invoice" ADD COLUMN     "HSN" TEXT,
+ADD COLUMN     "SAC" TEXT,
+ADD COLUMN     "description" TEXT,
+ADD COLUMN     "gst" DOUBLE PRECISION,
+ADD COLUMN     "perQuantityAmount" DOUBLE PRECISION,
+ADD COLUMN     "quantity" INTEGER NOT NULL DEFAULT 1,
+ADD COLUMN     "taxableAmount" DOUBLE PRECISION;

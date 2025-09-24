@@ -1,0 +1,97 @@
+<mjml>
+  <mj-head>
+    <mj-title>Your {{service}} Subscription Has Expired</mj-title>
+    <mj-attributes>
+      <mj-section padding="0px"></mj-section>
+      <mj-class name="button" font-family="Arial, sans-serif" background-color="#D93025" color="#ffffff" height="40px" text-transform="uppercase" font-size="16px" text-decoration="none" padding="10px 20px" border-radius="4px"></mj-class>
+      <mj-class name="footer-text" font-family="Arial, sans-serif" color="#666666" font-size="12px" line-height="18px"></mj-class>
+      <mj-class name="body-text" font-family="Arial, sans-serif" color="#111111" font-size="16px" line-height="24px" align="left"></mj-class>
+      <mj-class name="headline-text" font-family="Arial, sans-serif" color="#ffffff" font-size="22px" font-weight="bold" line-height="32px" align="center"></mj-class>
+    </mj-attributes>
+    <mj-style inline="inline">
+      .expired-box {
+        background-color: #fff5f5;
+        border-left: 4px solid #D93025;
+        padding: 15px;
+        border-radius: 4px;
+      }
+
+      .footer-link {
+        color: #038AD9 !important;
+        text-decoration: none;
+      }
+
+      .footer-link:hover {
+        text-decoration: underline;
+      }
+
+      .warning-banner {
+        background-color: #D93025;
+        color: white;
+        padding: 20px;
+        border-radius: 6px;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#ffffff">
+    <!-- Header Section -->
+    [[header]]
+    <mj-include path="./shared/header.mjml" />
+
+    <!-- Banner -->
+    <mj-section background-color="#D93025" padding="20px">
+      <mj-column>
+        <mj-text mj-class="headline-text">Your Subscription Has Expired</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Body -->
+    <mj-section padding="20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          Hi {{name}},
+          <br /><br />
+          We noticed that your subscription for <strong>{{service}}</strong> expired on <strong>{{expiryDate}}</strong>.
+          <br /><br />
+          Your access to "secure studio" now be limited. To continue enjoying uninterrupted service, please renew your subscription.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Expired Info Box -->
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text mj-class="body-text" css-class="expired-box">
+          <strong>Subscription Details:</strong><br />
+          Plan: {{plan}}<br />
+          Service: {{service}}<br />
+          Expired On: {{expiryDate}}<br />
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Renew Button -->
+    <!-- <mj-section padding="10px 0">
+      <mj-column>
+        <mj-button mj-class="button" href="{{renewalLink}}" align="left">
+          Renew Subscription
+        </mj-button>
+      </mj-column>
+    </mj-section> -->
+
+    <!-- Additional Help -->
+    <mj-section>
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          If you believe this was a mistake or need help renewing, feel free to contact our support team.
+
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-include path="./shared/footer.mjml" />
+    [[footer]]
+  </mj-body>
+</mjml>

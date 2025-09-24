@@ -1,0 +1,78 @@
+<mjml>
+  <mj-head>
+    <mj-title>Welcome to {{service}} - Subscription Confirmed</mj-title>
+    <mj-attributes>
+      <mj-section padding="0px"></mj-section>
+      <mj-class name="button" font-family="Arial, sans-serif" background-color="#006195" color="#ffffff" height="40px" text-transform="uppercase" font-size="16px" text-decoration="none" padding="10px 20px" border-radius="4px"></mj-class>
+      <mj-class name="footer-text" font-family="Arial, sans-serif" color="#666666" font-size="12px" line-height="18px"></mj-class>
+      <mj-class name="body-text" font-family="Arial, sans-serif" color="#111111" font-size="16px" line-height="24px" align="left"></mj-class>
+      <mj-class name="headline-text" font-family="Arial, sans-serif" color="#ffffff" font-size="22px" font-weight="bold" line-height="32px" align="center"></mj-class>
+    </mj-attributes>
+    <mj-style inline="inline">
+      .confirmation-box {
+        background-color: #e6f7ff;
+        border-left: 4px solid #038AD9;
+        padding: 15px;
+        border-radius: 4px;
+      }
+
+      .footer-link {
+        color: #038AD9 !important;
+        text-decoration: none;
+      }
+
+      .footer-link:hover {
+        text-decoration: underline;
+      }
+
+      .welcome-banner {
+        background-color: #006195;
+        color: white;
+        padding: 20px;
+        border-radius: 6px;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#ffffff">
+    <!-- Header -->
+    [[header]]
+    <mj-include path="./shared/header.mjml" />
+
+    <!-- Welcome Banner -->
+    <mj-section background-color="#006195" padding="20px">
+      <mj-column>
+        <mj-text mj-class="headline-text">Welcome to {{service}}!</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Main Body -->
+    <mj-section padding="20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          Hi {{name}},
+          <br /><br />
+          We're excited to confirm that you've successfully subscribed to <strong>{{service}}</strong>.
+          <br /><br />
+          Your subscription is now active and ready to use!
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Subscription Details Box -->
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text mj-class="body-text" css-class="confirmation-box">
+          <strong>Subscription Details:</strong><br />
+          Plan: {{plan}}<br />
+          Service: {{service}}<br />
+          Start Time: {{startTime}}<br />
+          End Time: {{endTime}}<br />
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- Footer -->
+    <mj-include path="./shared/footer.mjml" />
+    [[footer]]
+  </mj-body>
+</mjml>

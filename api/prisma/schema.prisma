@@ -1,0 +1,623 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Document {
+  id         String         @id @default(uuid())
+  title      String
+  contentUrl String // Cloud storage URL or file path
+  assignedTo User           @relation(fields: [userId], references: [id])
+  userId     String
+  status     DocumentStatus @default(PENDING)
+  signatures Signature[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model Signature {
+  id           String          @id @default(uuid())
+  document     Document        @relation(fields: [documentId], references: [id])
+  documentId   String
+  user         User            @relation(fields: [userId], references: [id])
+  userId       String
+  signedAt     DateTime? // Nullable until signed
+  signatureUrl String? // URL of signed document or e-sign image
+  status       SignatureStatus @default(PENDING)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+enum DocumentStatus {
+  PENDING
+  SIGNED
+  REJECTED
+}
+
+enum SignatureStatus {
+  PENDING
+  SIGNED
+  REJECTED
+}
+
+model SuperAdmin {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id]) // The user who received or spent the money
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WalletHistory {
+  id          String                  @id @default(uuid())
+  user        User                    @relation(fields: [userId], references: [id]) // The user who received or spent the money
+  userId      String
+  amount      Float
+  type        WalletTransactionType
+  source      WalletTransactionSource
+  referrer    User?                   @relation("ReferrerWalletHistory", fields: [referrerId], references: [id]) // Who referred this user
+  referrerId  String? // Nullable: Only used for referral earnings
+  description String?
+  createdAt   DateTime                @default(now())
+
+  @@index([userId]) // Optimized search for user transactions
+  @@index([referrerId]) // Optimized search for referral-based earnings
+}
+
+enum WalletTransactionType {
+  CREDIT // Money added
+  DEBIT // Money deducted
+}
+
+enum WalletTransactionSource {
+  REFERRAL // Earned from referral program
+  CASHBACK // Earned from cashback offers
+  PAYMENT // Direct top-up by user
+  ADJUSTMENT // Manual admin adjustment
+  BOOKING // Used for booking a service
+  REFUND // Money refunded to wallet
+}
+
+model AdvanceHistory {
+  id          String                 @id @default(uuid())
+  code        String?                @unique
+  user        User                   @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Float
+  type        AdvanceTransactionType
+  description String?
+  createdAt   DateTime               @default(now())
+
+  @@index([userId]) // Optimized search for user advances
+}
+
+enum AdvanceTransactionType {
+  GIVEN // Advance amount given
+  REPAID // Advance amount repaid
+  ADJUSTMENT // Manual adjustment
+}
+
+model Otp {
+  id             String   @id @default(cuid())
+  otp            String
+  otpToken       String   @unique
+  otpGeneratedAt DateTime
+  otpExpiresAt   DateTime
+  createdAt      DateTime @default(now())
+}
+
+model User {
+  id                    String             @id @default(cuid())
+  name                  String?
+  email                 String             @unique
+  imageUrl              String?
+  phone                 String?
+  gender                Gender?
+  dob                   DateTime?
+  address               String?
+  joiningDate           DateTime?
+  userType              UserType           @default(USER)
+  refreshToken          RefreshToken?
+  wallet                Float              @default(0.00)
+  advance               Float              @default(0.00)
+  companyId             String?
+  company               Company?           @relation(fields: [companyId], references: [id])
+  bookings              Booking[]
+  payments              Payment[]
+  UsersOnCoupons        UsersOnCoupons[]
+  UserSubscriptions     UserSubscription[]
+  Invoices              Invoice[]
+  TimeSlot              TimeSlot[]
+  freeMeetingRoomSlots  Int?
+  status                UserStatus         @default(ACTIVE)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  // Referral System
+  referralCode          String?            @unique // Add this field
+  referrerId            String? // Stores the ID of the user who referred this user
+  taxInvoice            Boolean            @default(false)
+  referrer              User?              @relation("UserReferrals", fields: [referrerId], references: [id])
+  referrals             User[]             @relation("UserReferrals") // List of users referred by this user
+  walletHistory         WalletHistory[]
+  ReferrerWalletHistory WalletHistory[]    @relation("ReferrerWalletHistory")
+  AdvanceHistory        AdvanceHistory[]
+  documents             Document[]
+  signatures            Signature[]
+  SuperAdmin            SuperAdmin?
+  Notification          Notification[]
+
+  @@index([referrerId])
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model ServiceCategory {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  services    Service[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+}
+
+model Service {
+  id           String          @id @default(uuid())
+  name         String          @unique
+  description  String?
+  category     ServiceCategory @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  HSN          String?
+  SAC          String?
+  bookings     Booking[]
+  plans        Plan[]
+  Subscription Subscription[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @default(now()) @updatedAt
+}
+
+model MeetingRoomSetting {
+  id           String     @id @default(uuid())
+  weekdays     String[] // ["Monday", "Tuesday", "Friday"]
+  startTime    String // e.g., "08:00"
+  endTime      String // e.g., "18:00"
+  slotDuration Int // In minutes, e.g., 30 for 30-min slots
+  pricePerSlot Float      @default(0)
+  timeSlots    TimeSlot[] // Precomputed slots
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model TimeSlot {
+  id                   String             @id @default(uuid())
+  meetingRoomSettingId String
+  meetingRoomSetting   MeetingRoomSetting @relation(fields: [meetingRoomSettingId], references: [id])
+  startTime            String // e.g., "09:00"
+  endTime              String // e.g., "09:30"
+  userId               String?
+  user                 User?              @relation(fields: [userId], references: [id])
+  isBooked             Boolean            @default(false)
+  bookingId            String?
+  booking              Booking?           @relation(fields: [bookingId], references: [id])
+  createdAt            DateTime           @default(now())
+}
+
+model Plan {
+  id                   String         @id @default(uuid())
+  service              Service        @relation(fields: [serviceId], references: [id])
+  serviceId            String
+  name                 String         @default("name")
+  features             String[]
+  price                Float          @default(0)
+  defaultPrice         Float          @default(0)
+  gstType              GstType        @default(PERCENTAGE)
+  gstValue             Float          @default(18.0) // Default GST set to 18%
+  duration             PlanType // HOUR, DAY, MONTH, YEAR
+  defaultValue         Int            @default(1)
+  advanceType          AdvanceType    @default(NIL)
+  recommended          Boolean        @default(false)
+  defaultSelect        Boolean        @default(false)
+  advanceValue         Float?
+  freeMeetingRoomSlots Int?
+  Booking              Booking[]
+  Subscriptions        Subscription[]
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @default(now()) @updatedAt
+}
+
+model Subscription {
+  id               String             @id @default(uuid())
+  service          Service            @relation(fields: [serviceId], references: [id])
+  serviceId        String
+  planId           String
+  plan             Plan               @relation(fields: [planId], references: [id])
+  startTime        DateTime
+  endTime          DateTime
+  type             SubscriptionType   @default(INDIVIDUAL)
+  employeesAllowed Int?
+  employeesFilled  Int?
+  amount           Float              @default(0.00)
+  discount         Float              @default(0.00)
+  bookingId        String             @unique
+  booking          Booking            @relation(fields: [bookingId], references: [id])
+  status           SubscriptionStatus
+  UserSubscription UserSubscription[]
+  createdBy        String
+  updatedAt        DateTime           @default(now()) @updatedAt
+  createdAt        DateTime           @default(now())
+}
+
+model UserSubscription {
+  id                 String       @id @default(cuid())
+  user               User         @relation(fields: [userId], references: [id])
+  userId             String
+  subscription       Subscription @relation(fields: [subscriptionId], references: [id])
+  subscriptionId     String
+  isSubscriptionUsed Boolean      @default(true)
+  assignedBy         String
+  updatedAt          DateTime     @default(now()) @updatedAt
+  createdAt          DateTime     @default(now())
+
+  @@unique([userId, subscriptionId])
+}
+
+enum SubscriptionType {
+  INDIVIDUAL
+  COMPANY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  HOLD
+  INACTIVE
+  QUOTED
+  DELETED
+}
+
+enum AdvanceType {
+  NIL
+  MONTHS
+  AMOUNT
+}
+
+enum GstType {
+  AMOUNT
+  PERCENTAGE
+}
+
+enum PlanType {
+  HOUR
+  DAY
+  MONTH
+  YEAR
+}
+
+model Booking {
+  id                     String        @id @default(uuid())
+  code                   String?       @unique
+  bookingType            BookingType   @default(NEW_SUBSCRIPTION)
+  user                   User          @relation(fields: [userId], references: [id])
+  userId                 String
+  service                Service?      @relation(fields: [serviceId], references: [id])
+  serviceId              String?
+  planId                 String?
+  plan                   Plan?         @relation(fields: [planId], references: [id])
+  quantity               Int           @default(1)
+  startTime              DateTime? // check & remove
+  endTime                DateTime? // check & remove
+  status                 BookingStatus @default(PENDING)
+  invoice                Invoice?
+  invoiceId              String?       @unique
+  advance                Float? // check & remove
+  paymentId              String?       @unique
+  payment                Payment?
+  subscriptionId         String?
+  subscription           Subscription?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @default(now()) @updatedAt
+  //  for RENEW_SUBSCRIPTION || EXTEND_SUBSCRIPTION
+  previousSubscriptionId String?
+  timeSlots              TimeSlot[] // for Meeting room
+}
+
+enum BookingType {
+  NEW_SUBSCRIPTION
+  RENEW_SUBSCRIPTION
+  EXTEND_SUBSCRIPTION
+  MEETING_ROOM
+}
+
+model Payment {
+  id                 String        @id @default(uuid())
+  code               String?       @unique
+  user               User          @relation(fields: [userId], references: [id])
+  userId             String
+  amount             Float
+  status             PaymentStatus @default(PENDING)
+  method             PaymentMethod @default(ONLINE)
+  transactionId      String?       @unique
+  razorPayOrderId    String?       @unique
+  razorPayPaymentId  String?       @unique
+  razorpaySignature  String?
+  paymentCompletedAt DateTime?
+  booking            Booking       @relation(fields: [bookingId], references: [id])
+  bookingId          String        @unique // Ensures only one Payment per Booking
+  createdAt          DateTime      @default(now())
+  Coupon             Coupon?       @relation(fields: [couponId], references: [id])
+  couponId           String?
+  updatedAt          DateTime      @default(now()) @updatedAt
+}
+
+model Invoice {
+  id                String      @id @default(uuid())
+  code              String?
+  dueDate           DateTime?
+  effectiveDate     DateTime?
+  description       String?
+  SAC               String?
+  HSN               String?
+  perQuantityAmount Float?
+  quantity          Int         @default(1)
+  totalAmount       Float
+  discount          Float?
+  taxableAmount     Float?
+  cgst              Float?
+  sgst              Float? // new
+  amountPaid        Float? // new
+  poNumber          String? // new
+  balanceDue        Float? // new
+  periodOfService   String? // new
+  cgstAmount        Float       @default(0.00) // new
+  sgstAmount        Float       @default(0.00) // new
+  finalAmount       Float
+  itemsJson         Json        @default("[]")
+  headingsJson      Json        @default("{}")
+  booking           Booking?    @relation(fields: [bookingId], references: [id])
+  bookingId         String?     @unique // Ensures only one Invoice per Booking
+  User              User?       @relation(fields: [userId], references: [id])
+  userId            String?
+  type              InvoiceType @default(NON_TAXABLE)
+  status            Boolean     @default(true)
+  createdAt         DateTime    @default(now()) // invoice Date as well
+  updatedAt         DateTime    @default(now()) @updatedAt
+}
+
+model NotificationTemplate {
+  id                   String                 @id @default(cuid())
+  name                 String                 @unique
+  channel              NotificationChannel[]
+  isSchedulable        Boolean                @default(false)
+  emailTemplateId      String
+  emailTemplate        EmailTemplate          @relation(fields: [emailTemplateId], references: [id])
+  // Later can add whatsapp templateId too.
+  NotificationSchedule NotificationSchedule[]
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+
+  @@index([name])
+}
+
+model EmailTemplate {
+  id                   String                 @id @default(cuid())
+  name                 String                 @unique
+  defaultSubject       String
+  customizedSubject    String
+  defaultContent       String // Mustache template content
+  customizedContent    String // Mustache template content  
+  placeholders         String[]
+  NotificationTemplate NotificationTemplate[]
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+
+  @@index([name])
+}
+
+model Coupon {
+  id             String           @id @default(uuid())
+  code           String           @unique
+  discountFor    DiscountFor
+  value          Float
+  valueType      ValueType
+  startDate      DateTime
+  endDate        DateTime
+  usageLimit     Int? // Max number of times this coupon can be used
+  minOrderAmount Float? // Minimum order value required
+  isActive       Boolean          @default(true)
+  redeemedBy     UsersOnCoupons[]
+  payments       Payment[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+enum DiscountFor {
+  PRICE
+  ADVANCE
+}
+
+enum ValueType {
+  PERCENTAGE
+  AMOUNT
+}
+
+model UsersOnCoupons {
+  userId     String
+  couponId   String
+  redeemedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  coupon     Coupon   @relation(fields: [couponId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([userId, couponId]) // Prevents duplicate redemptions by the same user
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@unique([userId, token])
+}
+
+model Amenities {
+  id        String   @id @default(cuid())
+  name      String
+  iconUrl   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Company {
+  id            String        @id @default(cuid())
+  logoUrl       String?
+  name          String?
+  GSTIN         String?
+  PAN           String?
+  address       String?
+  websiteUrl    String?
+  accountId     String?       @unique
+  account       Account?
+  employeeRange EmployeeRange @default(ONE_TO_FIVE)
+  employees     User[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
+}
+
+model Account {
+  id                    String   @id @default(cuid())
+  accountHolder         String
+  accountNumber         String
+  IFSC                  String
+  Branch                String
+  accountType           String
+  virtualPaymentAddress String
+  companyId             String   @unique
+  company               Company  @relation(fields: [companyId], references: [id])
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @default(now()) @updatedAt
+}
+
+model Holiday {
+  id          String   @id @default(uuid())
+  name        String
+  date        DateTime @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}
+
+model Notification {
+  id        String                @id @default(uuid())
+  userId    String?
+  user      User?                 @relation(fields: [userId], references: [id])
+  channel   NotificationChannel[]
+  createdAt DateTime              @default(now())
+
+  // only relevant for in-app
+  title  String?
+  body   String?
+  isRead Boolean   @default(false)
+  sentAt DateTime?
+
+  // only relevant for email/whatsapp
+  templateName String?
+  placeHolders Json?
+
+  // only relevant for email
+  ccEmails String?
+}
+
+model NotificationSchedule {
+  id          String   @id @default(uuid())
+  description String
+  daysBefore  Int[] // e.g. 2, 3, 7
+  updatedAt   DateTime @default(now()) @updatedAt
+  createdAt   DateTime @default(now())
+
+  // only relevant for in-app
+  title String?
+  body  String?
+
+  // only relevant for email/whatsapp
+  notificationTemplateId String
+  notificationTemplate   NotificationTemplate @relation(fields: [notificationTemplateId], references: [id])
+}
+
+model AppSetting {
+  id        String   @id @default(uuid())
+  cgst      Float?   @default(9)
+  sgst      Float?   @default(9)
+  ccEmails  String? // comma-separated emails
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model InvoiceSetting {
+  id               String   @id @default(uuid())
+  logoUrl          String?
+  invoiceNumber    Int
+  taxInvoiceNumber Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now()) @updatedAt
+}
+
+enum NotificationChannel {
+  EMAIL
+  INAPP
+  WHATSAPP
+}
+
+enum EmployeeRange {
+  ONE_TO_FIVE
+  SIX_TO_TEN
+  ELEVEN_TO_TWENTY
+  TWENTY_PLUS
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum UserType {
+  USER
+  EMPLOYEE
+  USER_ADMIN
+  SUPER_ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  FAILED
+  QUOTED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  QUOTED
+}
+
+enum PaymentMethod {
+  ONLINE
+  OFFLINE
+}
+
+enum InvoiceType {
+  TAXABLE
+  NON_TAXABLE
+}

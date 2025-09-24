@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Invoice" ADD COLUMN     "amountPaid" DOUBLE PRECISION,
+ADD COLUMN     "balanceDue" DOUBLE PRECISION,
+ADD COLUMN     "poNumber" TEXT,
+ADD COLUMN     "sgst" DOUBLE PRECISION;

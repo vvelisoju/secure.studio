@@ -1,0 +1,22 @@
+# Use an official Node.js runtime as a parent image
+FROM node:20
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json, and install project dependencies
+COPY package*.json ./
+RUN npm install && npm cache clean --force
+
+# Set the NODE_ENV environment variable to "development"
+ENV NODE_ENV=development
+
+# Copy the rest of your application code into the container
+COPY . .
+
+# Expose the ports your application will run on
+EXPOSE 3010 
+EXPOSE 6010 
+
+# Define the command to run both the development server and Storybook
+CMD ["npm", "run", "dev:all"]

@@ -1,0 +1,15 @@
+const Dangerous = () => {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="100%"
+            viewBox="0 -960 960 960"
+            width="100%"
+            fill="currentColor"
+        >
+            <path d="M322-99 99-322v-317l223-223h317l223 223v317L639-99H322Zm39-214 119-119 119 119 49-48-120-119 120-119-49-49-119 120-119-120-48 49 119 119-119 119 48 48Z" />
+        </svg>
+    );
+};
+
+export default Dangerous;

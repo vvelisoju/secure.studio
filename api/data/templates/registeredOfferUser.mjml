@@ -1,0 +1,114 @@
+<mjml>
+  <mj-head>
+    <mj-title>Welcome to {{AppName}} - Registration Successful!</mj-title>
+    <mj-attributes>
+      <mj-section padding="0px"></mj-section>
+      <mj-class name="button" font-family="Arial, sans-serif" background-color="#006195" color="#ffffff" height="40px" text-transform="uppercase" font-size="16px" text-decoration="none" padding="10px 20px" border-radius="4px"></mj-class>
+      <mj-class name="footer-text" font-family="Arial, sans-serif" color="#666666" font-size="12px" line-height="18px"></mj-class>
+      <mj-class name="body-text" font-family="Arial, sans-serif" color="#111111" font-size="16px" line-height="24px" align="left"></mj-class>
+      <mj-class name="headline-text" font-family="Arial, sans-serif" color="#111111" font-size="22px" font-weight="bold" line-height="32px" align="center"></mj-class>
+      <mj-class name="social-element" margin="0 1rem"></mj-class>
+    </mj-attributes>
+    <mj-font name="Arial" href="https://fonts.googleapis.com/css?family=Arial"></mj-font>
+    <mj-style inline="inline">
+      .coupon-code {
+        font-size: 22px;
+        font-weight: bold;
+        color: #006195;
+        letter-spacing: 2px;
+        background: #f2f8fc;
+        padding: 12px 20px;
+        border: 2px dashed #006195;
+        border-radius: 8px;
+        display: inline-block;
+        margin: 10px 0;
+      }
+
+      .expiry-date {
+        color: #d14836;
+        font-weight: bold;
+      }
+
+      .discount-banner {
+        background: linear-gradient(135deg, #006195, #038AD9);
+        color: white;
+        padding: 20px;
+        border-radius: 6px;
+      }
+
+      .footer-link {
+        color: #038AD9 !important;
+        text-decoration: none;
+      }
+
+      .footer-link:hover {
+        text-decoration: underline;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#ffffff">
+    <!-- Header Section -->
+    [[header]]
+    <mj-include path="./shared/header.mjml" />
+    <!-- Main Content -->
+    <mj-section padding="10px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          Dear {{name}},
+          <br /><br />
+          Thank you for joining the {{AppName}} community! To welcome you and help you get started, we're pleased to offer you an exclusive discount on your first purchase.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Coupon Section -->
+    <mj-section padding="10px 0" background-color="#f8f9fa" border-radius="8px">
+      <mj-column>
+        <mj-text align="center" font-size="16px" font-family="Arial, sans-serif" color="#111111" padding="10px 0">
+          Use this special coupon code for <strong>{{discountAmount}}% off</strong> your first purchase:
+        </mj-text>
+        <mj-text align="center" padding="5px 0">
+          <span class="coupon-code">{{couponCode}}</span>
+        </mj-text>
+        <mj-text align="center" font-size="16px" font-family="Arial, sans-serif" color="#111111" padding="10px 0">
+          Valid until <span class="expiry-date">{{expiryDate}}</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Call to Action -->
+    <mj-section padding="10px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text" align="center">
+          Redeem your discount now and explore our premium offerings!
+        </mj-text>
+        <mj-button height="5px" mj-class="button" href="{{shopUrl}}">
+          Book Now
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+    <!-- Additional Information -->
+    <mj-section padding="20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          <strong>How to use your coupon:</strong>
+          <ol>
+            <li>Browse our catalog and add items to your cart</li>
+            <li>Enter the coupon code at checkout</li>
+            <li>Enjoy your discount!</li>
+          </ol>
+          <br />
+          If you have any questions about this offer or need assistance with your purchase, our customer support team is ready to help.
+          <br /><br />
+          We hope you enjoy your {{AppName}} experience!
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer Section -->
+    <mj-include path="./shared/footer.mjml" />
+   [[footer]]
+  </mj-body>
+</mjml>

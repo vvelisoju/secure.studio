@@ -1,0 +1,116 @@
+<mjml>
+  <mj-head>
+    <mj-title>Thank You for Contacting {{AppName}}</mj-title>
+    <mj-attributes>
+      <mj-section padding="0px"></mj-section>
+      <mj-class name="button" font-family="Arial, sans-serif" background-color="#006195" color="#ffffff" height="40px" text-transform="uppercase" font-size="16px" text-decoration="none" padding="10px 20px" border-radius="4px"></mj-class>
+      <mj-class name="footer-text" font-family="Arial, sans-serif" color="#666666" font-size="12px" line-height="18px"></mj-class>
+      <mj-class name="body-text" font-family="Arial, sans-serif" color="#111111" font-size="16px" line-height="24px" align="left"></mj-class>
+      <mj-class name="headline-text" font-family="Arial, sans-serif" color="#111111" font-size="22px" font-weight="bold" line-height="32px" align="center"></mj-class>
+      <mj-class name="social-element" margin="0 1rem"></mj-class>
+    </mj-attributes>
+    <mj-font name="Arial" href="https://fonts.googleapis.com/css?family=Arial"></mj-font>
+    <mj-style inline="inline">
+      .contact-header {
+        background-color: #006195;
+        color: white;
+        padding: 15px;
+        border-radius: 6px 6px 0 0;
+      }
+
+      .contact-container {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .contact-details {
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0;
+      }
+
+      .field-label {
+        font-weight: bold;
+        color: #006195;
+      }
+
+      .field-value {
+        margin-bottom: 10px;
+      }
+
+      .confirmation-notice {
+        background-color: #e6f7ff;
+        border-left: 4px solid #0086d4;
+        padding: 10px 15px;
+        border-radius: 4px;
+      }
+
+      .footer-link {
+        color: #038AD9 !important;
+        text-decoration: none;
+      }
+
+      .footer-link:hover {
+        text-decoration: underline;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#ffffff">
+    <!-- Header Section -->
+    [[header]]
+    <mj-include path="./shared/header.mjml" />
+
+    <!-- Main Content -->
+    <mj-section padding="0 0 20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          Dear {{name}},
+          <br /><br />
+          Thank you for reaching out to us at {{AppName}}. We have received your message and will get back to you as soon as possible. Below is a summary of the information you provided:
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Contact Details Section -->
+    <mj-section padding="10px 0" background-color="#f8f9fa" border-radius="8px">
+      <mj-column>
+        <mj-text mj-class="body-text" padding="10px">
+          <div class="contact-details">
+            <p><span class="field-label">Name:</span> {{name}}</p>
+            <p><span class="field-label">Email:</span> {{email}}</p>
+            <p><span class="field-label">Phone:</span> {{phone}}</p>
+            <p><span class="field-label">Message:</span></p>
+            <p class="field-value">{{message}}</p>
+          </div>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Confirmation Notice -->
+    <mj-section padding="20px 0">
+      <mj-column width="100%">
+        <mj-text mj-class="body-text" css-class="confirmation-notice">
+          <strong>What happens next:</strong> A member of our team will review your message and respond to you within 1-2 business days. Please ensure that emails from {{AppName}} are not filtered to your spam folder.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- Additional Information -->
+    <mj-section>
+      <mj-column width="100%">
+        <mj-text mj-class="body-text">
+          If your inquiry is urgent, you can contact our support team during business hours.
+          <br /><br />
+          We appreciate your interest in {{AppName}} and look forward to assisting you.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-include path="./shared/footer.mjml" />
+    [[footer]]
+  </mj-body>
+</mjml>
