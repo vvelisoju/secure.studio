@@ -129,7 +129,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     color="white"
                     size="lg"
                     borderRadius="xl"
-                    leftIcon={<Text fontSize="18px">📞</Text>}
                     _hover={{
                       bg: "linear-gradient(135deg, #059669 0%, #047857 100%)",
                       transform: "scale(1.05)",
@@ -140,7 +139,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     boxShadow="0 6px 20px rgba(16, 185, 129, 0.3)"
                     py={6}
                   >
-                    Call Now
+                    <Flex align="center" gap={2}>
+                      <Text fontSize="18px">📞</Text>
+                      <Text>Call Now</Text>
+                    </Flex>
                   </Button>
 
                   <Button
@@ -150,7 +152,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     color="white"
                     size="lg"
                     borderRadius="xl"
-                    leftIcon={<Text fontSize="18px">💬</Text>}
                     _hover={{
                       bg: "linear-gradient(135deg, #128C7E 0%, #075E54 100%)",
                       transform: "scale(1.05)",
@@ -161,7 +162,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     boxShadow="0 6px 20px rgba(37, 211, 102, 0.3)"
                     py={6}
                   >
-                    WhatsApp
+                    <Flex align="center" gap={2}>
+                      <Text fontSize="18px">💬</Text>
+                      <Text>WhatsApp</Text>
+                    </Flex>
                   </Button>
                 </Flex>
               </Flex>

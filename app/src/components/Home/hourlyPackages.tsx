@@ -135,6 +135,7 @@ const HourlyPackages = () => {
             description:
                 "Complete workshop solution with all equipment included",
             category: "For Institutes / Trainers",
+            whoIsThisFor: "Training Institutes, Workshop Conductors, Corporate Trainers",
         },
         {
             name: "Virtual + Hourly Combo",
@@ -145,6 +146,7 @@ const HourlyPackages = () => {
             description:
                 "Professional address plus flexible meeting space access",
             category: "For Remote Professionals",
+            whoIsThisFor: "Remote Workers, Consultants, Online Businesses",
         },
         {
             name: "Custom Business Plan",
@@ -155,6 +157,7 @@ const HourlyPackages = () => {
                 "Customized solutions designed to meet your unique business requirements.",
             category: "Business Solutions",
             popular: true,
+            whoIsThisFor: "Growing Businesses, Special Requirements, Enterprise Clients",
         },
     ];
     const coworkingPackages = [
@@ -621,7 +624,7 @@ const HourlyPackages = () => {
                                         {plan.description}
                                     </Text>
 
-                                    {plan.whoIsThisFor && (
+                                    {(plan as any).whoIsThisFor && (
                                         <Box
                                             bg="green.50"
                                             p={2}
@@ -641,7 +644,7 @@ const HourlyPackages = () => {
                                                 fontSize="xs"
                                                 color="green.600"
                                             >
-                                                {plan.whoIsThisFor}
+                                                {(plan as any).whoIsThisFor}
                                             </Text>
                                         </Box>
                                     )}
@@ -800,27 +803,25 @@ const HourlyPackages = () => {
                                         {plan.description}
                                     </Text>
 
-                                    {plan.whoIsThisFor && (
+                                    {(plan as any).whoIsThisFor && (
                                         <Box
-                                            bg="green.50"
-                                            p={2}
-                                            borderRadius="md"
-                                            mb={3}
-                                            w="100%"
+                                            mt={6}
+                                            p={4}
+                                            bg="blue.50"
+                                            borderRadius="lg"
+                                            border="1px solid"
+                                            borderColor="blue.200"
                                         >
                                             <Text
-                                                fontSize="xs"
+                                                fontSize="sm"
                                                 fontWeight="bold"
-                                                color="green.700"
-                                                mb={1}
+                                                color="blue.800"
+                                                mb={2}
                                             >
-                                                Perfect for:
+                                                👥 Who is this for?
                                             </Text>
-                                            <Text
-                                                fontSize="xs"
-                                                color="green.600"
-                                            >
-                                                {plan.whoIsThisFor}
+                                            <Text fontSize="sm" color="blue.700">
+                                                {(plan as any).whoIsThisFor}
                                             </Text>
                                         </Box>
                                     )}

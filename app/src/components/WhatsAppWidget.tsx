@@ -48,7 +48,7 @@ const WhatsAppWidget = () => {
         >
           Chat with us on WhatsApp
           <br />
-          <Text fontSize="xs" color="gray.300">+91 94946 44848</Text>
+          <Box fontSize="xs" color="gray.300">+91 94946 44848</Box>
         </Box>
       )}
       

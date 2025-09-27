@@ -223,11 +223,7 @@ const Header = () => {
                         py={{ base: 2, md: 3 }}
                         fontSize={{ base: "sm", md: "md" }}
                         fontWeight="bold"
-                        leftIcon={
-                            <Box fontSize={{ base: "14px", md: "16px" }}>
-                                📞
-                            </Box>
-                        }
+                        
                         _hover={{
                             bg: "linear-gradient(135deg, #059669 0%, #047857 100%)",
                             transform: "translateY(-2px)",
@@ -236,7 +232,10 @@ const Header = () => {
                         transition="all 0.3s"
                         boxShadow="0 2px 8px rgba(16, 185, 129, 0.3)"
                     >
-                        Call Now: 9494 64 4848
+                        <Flex align="center" gap={2}>
+                            <Box fontSize={{ base: "14px", md: "16px" }}>📞</Box>
+                            <Text>Call Now: 9494 64 4848</Text>
+                        </Flex>
                     </Button>
                 </Link>
 
@@ -433,9 +432,12 @@ const Header = () => {
                                     w="100%"
                                     fontSize="sm"
                                     justifyContent="flex-start"
-                                    leftIcon={<Box fontSize="14px">📞</Box>}
+                                    
                                 >
-                                    Contact Now
+                                    <Flex align="center" gap={2}>
+                                        <Box fontSize="14px">📞</Box>
+                                        <Text>Contact Now</Text>
+                                    </Flex>
                                 </Button>
                             </MenuItem>
                         </MenuContent>

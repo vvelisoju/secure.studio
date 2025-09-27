@@ -164,66 +164,74 @@ const GetInTouch = () => {
                         
                         {/* Call to Action Buttons */}
                         <Stack gap={4}>
-                            <Button
-                                as={Link}
-                                href="tel:+919494644848"
-                                bg="linear-gradient(135deg, #10b981 0%, #059669 100%)"
-                                color="white"
-                                size="lg"
-                                borderRadius="xl"
-                                leftIcon={<Text fontSize="18px">📞</Text>}
-                                _hover={{
-                                    bg: "linear-gradient(135deg, #059669 0%, #047857 100%)",
-                                    transform: "translateY(-2px)",
-                                    boxShadow: "0 8px 25px rgba(16, 185, 129, 0.4)",
-                                }}
-                                transition="all 0.3s"
-                                fontWeight="bold"
-                                boxShadow="0 6px 20px rgba(16, 185, 129, 0.3)"
-                            >
-                                Call Now: +91 9494 64 4848
-                            </Button>
+                            <Link href="tel:+919494644848">
+                                <Button
+                                    bg="linear-gradient(135deg, #10b981 0%, #059669 100%)"
+                                    color="white"
+                                    size="lg"
+                                    borderRadius="xl"
+                                    _hover={{
+                                        bg: "linear-gradient(135deg, #059669 0%, #047857 100%)",
+                                        transform: "translateY(-2px)",
+                                        boxShadow: "0 8px 25px rgba(16, 185, 129, 0.4)",
+                                    }}
+                                    transition="all 0.3s"
+                                    fontWeight="bold"
+                                    boxShadow="0 6px 20px rgba(16, 185, 129, 0.3)"
+                                    w="100%"
+                                >
+                                    <Flex align="center" gap={2}>
+                                        <Text fontSize="18px">📞</Text>
+                                        <Text>Call Now: +91 9494 64 4848</Text>
+                                    </Flex>
+                                </Button>
+                            </Link>
 
-                            <Button
-                                as={Link}
-                                href="https://wa.me/919494644848?text=Hi! I'm interested in booking a workspace at Secure Studio. Can you help me with the details?"
-                                target="_blank"
-                                bg="linear-gradient(135deg, #25D366 0%, #128C7E 100%)"
-                                color="white"
-                                size="lg"
-                                borderRadius="xl"
-                                leftIcon={<Text fontSize="18px">💬</Text>}
-                                _hover={{
-                                    bg: "linear-gradient(135deg, #128C7E 0%, #075E54 100%)",
-                                    transform: "translateY(-2px)",
-                                    boxShadow: "0 8px 25px rgba(37, 211, 102, 0.4)",
-                                }}
-                                transition="all 0.3s"
-                                fontWeight="bold"
-                                boxShadow="0 6px 20px rgba(37, 211, 102, 0.3)"
-                            >
-                                WhatsApp Us
-                            </Button>
+                            <Link href="https://wa.me/919494644848?text=Hi! I'm interested in booking a workspace at Secure Studio. Can you help me with the details?" target="_blank">
+                                <Button
+                                    bg="linear-gradient(135deg, #25D366 0%, #128C7E 100%)"
+                                    color="white"
+                                    size="lg"
+                                    borderRadius="xl"
+                                    _hover={{
+                                        bg: "linear-gradient(135deg, #128C7E 0%, #075E54 100%)",
+                                        transform: "translateY(-2px)",
+                                        boxShadow: "0 8px 25px rgba(37, 211, 102, 0.4)",
+                                    }}
+                                    transition="all 0.3s"
+                                    fontWeight="bold"
+                                    boxShadow="0 6px 20px rgba(37, 211, 102, 0.3)"
+                                    w="100%"
+                                >
+                                    <Flex align="center" gap={2}>
+                                        <Text fontSize="18px">💬</Text>
+                                        <Text>WhatsApp Us</Text>
+                                    </Flex>
+                                </Button>
+                            </Link>
 
-                            <Button
-                                as={Link}
-                                href="mailto:support@secure.studio"
-                                bg="linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)"
-                                color="white"
-                                size="lg"
-                                borderRadius="xl"
-                                leftIcon={<Text fontSize="18px">✉️</Text>}
-                                _hover={{
-                                    bg: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
-                                    transform: "translateY(-2px)",
-                                    boxShadow: "0 8px 25px rgba(59, 130, 246, 0.4)",
-                                }}
-                                transition="all 0.3s"
-                                fontWeight="bold"
-                                boxShadow="0 6px 20px rgba(59, 130, 246, 0.3)"
-                            >
-                                Email Us
-                            </Button>
+                            <Link href="mailto:support@secure.studio">
+                                <Button
+                                    bg="linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)"
+                                    color="white"
+                                    size="lg"
+                                    borderRadius="xl"
+                                    _hover={{
+                                        bg: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
+                                        transform: "translateY(-2px)",
+                                        boxShadow: "0 8px 25px rgba(59, 130, 246, 0.4)",
+                                    }}
+                                    transition="all 0.3s"
+                                    fontWeight="bold"
+                                    boxShadow="0 6px 20px rgba(59, 130, 246, 0.3)"
+                                    w="100%"
+                                >
+                                    <Flex align="center" gap={2}>
+                                        <Text fontSize="18px">✉️</Text>
+                                        <Text>Email Us</Text>
+                                    </Flex>
+                                </Button>
+                            </Link>
                         </Stack>
 
                         {/* Quick Info */}
