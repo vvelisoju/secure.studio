@@ -3,7 +3,7 @@ import logo from "../../assets/logo-lg.png"
 import useAuthStore from "../../stores/auth"
 import { useLocation } from "react-router-dom"
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger, } from "../../components/ui/menu"
-import MoreIcon from "../../assets/more"
+import MenuIcon from "../../assets/menu"
 import { useEffect } from "react"
 
 const Header = () => {
@@ -56,15 +56,16 @@ const Header = () => {
                 <Box display={{ md: "none" }} >
                     <MenuRoot>
                         <MenuTrigger display={"flex"} justifyContent={"center"} asChild>
-                            <Span> {MoreIcon("10", "10")}</Span>
+                            <Span> {MenuIcon("20", "20")}</Span>
                         </MenuTrigger>
                         <MenuContent>
                             {isAuthenticated && <MenuItem value="Dashboard"><Link fontWeight={"400"} href="/dashboard" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Dashboard</Link></MenuItem>}
                             {location.pathname === "/auth" && <MenuItem value="Home"><Link fontWeight={"400"} href="/" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Home</Link></MenuItem>}
-                            <MenuItem value="Services"><Link fontWeight={"400"} href="#services" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Services</Link></MenuItem>
-                            <MenuItem value="Amenities"><Link fontWeight={"400"} href="#amenities" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Amenities</Link></MenuItem>
-                            <MenuItem value="Support"><Link fontWeight={"400"} href="#getinTouch" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Support</Link></MenuItem>
-                            <MenuItem value="Support"><Link fontWeight={"400"} href="#aboutUs" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >About us</Link></MenuItem>
+                            <MenuItem value="Services"><Link fontWeight={"400"} href="/#services" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Services</Link></MenuItem>
+                            <MenuItem value="About Us"><Link fontWeight={"400"} href="/#aboutUs" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >About Us</Link></MenuItem>
+                            <MenuItem value="Amenities"><Link fontWeight={"400"} href="/#amenities" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Amenities</Link></MenuItem>
+                            <MenuItem value="Pricing"><Link fontWeight={"400"} href="/#pricing" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Pricing</Link></MenuItem>
+                            <MenuItem value="Support"><Link fontWeight={"400"} href="/#getinTouch" outlineColor={"none"} _focus={{ outlineColor: "transparent" }} >Support</Link></MenuItem>
                         </MenuContent>
                     </MenuRoot>
                 </Box>

@@ -1,15 +1,16 @@
-import { Flex, IconButton } from "@chakra-ui/react"
-import Banner from "../components/Home/banner"
-import Aboutus from "../components/Home/aboutUs"
-import Amenities from "../components/Home/amenities"
-import Companies from "../components/Home/companies"
-import Services from "../components/Home/services"
-import GetInTouch from "../components/Home/getInTouch"
+import { Flex, IconButton } from "@chakra-ui/react";
+import Banner from "../components/Home/banner";
+import Aboutus from "../components/Home/aboutUs";
+import Amenities from "../components/Home/amenities";
+import Companies from "../components/Home/companies";
+import Services from "../components/Home/services";
+import GetInTouch from "../components/Home/getInTouch";
+import HourlyPackages from "../components/Home/hourlyPackages";
+import WhyChooseHourly from "../components/Home/whyChooseHourly";
 import { useEffect, useState } from "react";
-import NewServices from "../components/Home/NewServices"
-import upwardIcon from "../assets/upward"
+import NewServices from "../components/Home/NewServices";
+import upwardIcon from "../assets/upward";
 const Home = () => {
-
     const [showButton, setShowButton] = useState(false);
 
     useEffect(() => {
@@ -29,13 +30,15 @@ const Home = () => {
     };
 
     return (
-        <Flex flexGrow={1} direction={"column"} >
+        <Flex flexGrow={1} direction={"column"}>
             <Banner />
             <NewServices />
+            <HourlyPackages />
+            {/* <WhyChooseHourly /> */}
             <Aboutus />
-            <Companies />
+            {/* <Companies /> */}
             <Amenities />
-            <Services />
+            {/* <Services /> */}
             <GetInTouch />
             {showButton && (
                 <IconButton
@@ -48,10 +51,12 @@ const Home = () => {
                     onClick={scrollToTop}
                     boxShadow="lg"
                     borderRadius="full"
-                >{upwardIcon()}</IconButton>
+                >
+                    {upwardIcon()}
+                </IconButton>
             )}
         </Flex>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
