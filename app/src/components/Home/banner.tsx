@@ -463,7 +463,6 @@ const Banner = () => {
                 bottom: "0",
                 background: "rgba(0,0,0,0.3)",
                 backgroundClip: "text",
-                WebkitBackgroundClip: "text",
                 zIndex: -1,
               }}
             >

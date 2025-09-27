@@ -161,7 +161,6 @@ const Amenities = () => {
                                 lineHeight="1.2"
                                 transition="all 0.3s ease"
                                 px={{ base: 1, md: 2 }}
-                                noOfLines={2}
                                 wordBreak="break-word"
                             >
                                 {amenity.name}

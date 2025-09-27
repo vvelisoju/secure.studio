@@ -144,7 +144,6 @@ const NewServices = () => {
                     fontWeight="600"
                     color="gray.800"
                     lineHeight="1.3"
-                    noOfLines={2}
                   >
                     {service.name}
                   </Card.Title>
@@ -156,7 +155,6 @@ const NewServices = () => {
                 fontSize={{ base: 12, md: 13 }}
                 color="gray.600"
                 lineHeight="1.5"
-                noOfLines={{ base: 3, md: 4 }}
               >
                 {service.description}
               </Card.Description>

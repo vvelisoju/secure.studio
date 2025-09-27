@@ -294,7 +294,6 @@ const AboutUs = () => {
                                 bottom: 0,
                                 background: "linear-gradient(135deg, #fbbf24, #f59e0b)",
                                 backgroundClip: "text",
-                                WebkitBackgroundClip: "text",
                                 color: "transparent",
                                 filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
                             }}
@@ -338,22 +337,10 @@ const AboutUs = () => {
                                 w={["280px", "320px"]}
                                 h="auto"
                                 borderRadius="20px"
-                                fallback={
-                                    <Box
-                                        w={["280px", "320px"]}
-                                        h={["200px", "240px"]}
-                                        bg="rgba(255,255,255,0.1)"
-                                        borderRadius="20px"
-                                        display="flex"
-                                        alignItems="center"
-                                        justifyContent="center"
-                                        color="white"
-                                        fontSize="lg"
-                                        fontWeight="bold"
-                                    >
-                                        🏢 Co-working Space
-                                    </Box>
-                                }
+                                onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.style.display = 'none';
+                                }}
                             />
                         </Box>
                     </Flex>
