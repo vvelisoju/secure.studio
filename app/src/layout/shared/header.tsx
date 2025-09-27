@@ -219,9 +219,9 @@ const Header = () => {
                         bg="linear-gradient(135deg, #10b981 0%, #059669 100%)"
                         color="white"
                         borderRadius="full"
-                        px={{ base: 4, md: 6 }}
+                        px={{ base: 3, md: 6 }}
                         py={{ base: 2, md: 3 }}
-                        fontSize={{ base: "sm", md: "md" }}
+                        fontSize={{ base: "xs", md: "md" }}
                         fontWeight="bold"
                         
                         _hover={{
@@ -232,9 +232,10 @@ const Header = () => {
                         transition="all 0.3s"
                         boxShadow="0 2px 8px rgba(16, 185, 129, 0.3)"
                     >
-                        <Flex align="center" gap={2}>
-                            <Box fontSize={{ base: "14px", md: "16px" }}>📞</Box>
-                            <Text>Call Now: 9494 64 4848</Text>
+                        <Flex align="center" gap={{ base: 1, md: 2 }}>
+                            <Box fontSize={{ base: "12px", md: "16px" }}>📞</Box>
+                            <Text display={{ base: "none", sm: "block" }}>Call Now: 9494 64 4848</Text>
+                            <Text display={{ base: "block", sm: "none" }}>Call Now</Text>
                         </Flex>
                     </Button>
                 </Link>
