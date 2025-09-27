@@ -70,7 +70,7 @@ const Amenities = () => {
                     fontSize={{ base: 22, sm: 26, md: 30, lg: 36 }}
                     fontWeight={"bold"}
                     mb={{ base: 1, md: 2 }}
-                    color="white"
+                    color="black"
                     textShadow="0 4px 8px rgba(0,0,0,0.5)"
                     lineHeight="1.2"
                     textAlign="center"
@@ -80,7 +80,7 @@ const Amenities = () => {
                 </Text>
                 <Text
                     fontSize={{ base: 13, sm: 14, md: 16, lg: 18 }}
-                    color="black"
+                    color="blue"
                     fontWeight="600"
                     maxW={{ base: "90%", md: "600px" }}
                     textShadow="0 2px 6px rgba(0,0,0,0.4)"

@@ -1,137 +1,219 @@
-
 import { Box, Flex, Button, Text, Span, Link, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
-const ContactForm = () => (
-  <Flex
-    direction="column"
-    gap={3}
-    p={6}
-    border="2px solid"
-    borderColor="blue.500"
-    borderRadius="xl"
-    bg="white"
-    w="100%"
-    maxW="400px"
-    boxShadow="2xl"
-    position="relative"
-  >
-    {/* Urgency Badge */}
-    <Box
-      position="absolute"
-      top={-3}
-      right={3}
-      bg="red.500"
-      color="white"
-      px={3}
-      py={1}
-      borderRadius="full"
-      fontSize="xs"
-      fontWeight="bold"
-      animation="pulse 2s infinite"
-    >
-      🔥 Limited Spots Available
-    </Box>
+const QuickActionCards = () => {
+  const handleWhatsAppContact = () => {
+    const phoneNumber = "919494644848";
+    const message =
+      "Hi! I'd like to know more about SecureStudio's workspace solutions in Warangal.";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
-    <Box textAlign="center" mb={3}>
-      <Text fontSize="xl" fontWeight="bold" color="blue.600" mb={1}>
-        Get Instant Quote & Save 30%
-      </Text>
-      <Text fontSize="sm" color="gray.700" fontWeight="semibold" mb={2}>
-        ⚡ Quick response in 15 minutes
-      </Text>
-      <Box bg="green.50" p={3} borderRadius="md">
-        <Text fontSize="sm" color="green.700" fontWeight="bold">
-          🎯 Special Launch Offer: First Week Only ₹99!
+  const handleCallNow = () => {
+    window.location.href = "tel:+919494644848";
+  };
+
+  return (
+    <Flex direction="column" gap={4} w="100%" maxW="400px" position="relative">
+      {/* Urgency Badge */}
+      <Box
+        position="absolute"
+        top={-3}
+        right={3}
+        bg="red.500"
+        color="white"
+        px={3}
+        py={1}
+        borderRadius="full"
+        fontSize="xs"
+        fontWeight="bold"
+        animation="pulse 2s infinite"
+        zIndex={10}
+      >
+        🔥 Limited Spots Available
+      </Box>
+
+      {/* Main Offer Card */}
+      <Box
+        bg="rgba(255,255,255,0.95)"
+        p={6}
+        borderRadius="xl"
+        boxShadow="0 20px 60px rgba(0,0,0,0.15)"
+        border="2px solid"
+        borderColor="blue.500"
+        backdropFilter="blur(10px)"
+        textAlign="center"
+      >
+        <Text fontSize="xl" fontWeight="bold" color="blue.600" mb={2}>
+          🎯 Special Launch Offer
+        </Text>
+        <Text fontSize="2xl" fontWeight="900" color="orange.500" mb={2}>
+          First Day Only ₹99!
+        </Text>
+        <Text fontSize="sm" color="gray.700" fontWeight="semibold">
+          ⚡ Quick response in 15 minutes
         </Text>
       </Box>
-    </Box>
 
-    <input
-      type="text"
-      placeholder="Your Name"
-      style={{
-        padding: "12px 16px",
-        borderRadius: "8px",
-        border: "2px solid #e2e8f0",
-        fontSize: "14px",
-        outline: "none",
-        transition: "border-color 0.2s",
-      }}
-    />
-    <input
-      type="email"
-      placeholder="Your Email"
-      style={{
-        padding: "12px 16px",
-        borderRadius: "8px",
-        border: "2px solid #e2e8f0",
-        fontSize: "14px",
-        outline: "none",
-        transition: "border-color 0.2s",
-      }}
-    />
-    <input
-      type="tel"
-      placeholder="Phone Number"
-      style={{
-        padding: "12px 16px",
-        borderRadius: "8px",
-        border: "2px solid #e2e8f0",
-        fontSize: "14px",
-        outline: "none",
-        transition: "border-color 0.2s",
-      }}
-    />
-    <select
-      style={{
-        padding: "12px 16px",
-        borderRadius: "8px",
-        border: "2px solid #e2e8f0",
-        fontSize: "14px",
-        outline: "none",
-        backgroundColor: "white",
-        transition: "border-color 0.2s",
-      }}
-    >
-      <option value="">What service interests you?</option>
-      <option value="hourly">
-        🕐 Hourly Office (₹200/hr) - Perfect for meetings
-      </option>
-      <option value="evening">
-        🌙 Evening Office (₹1,500/month) - Student-friendly
-      </option>
-      <option value="coworking">
-        🏢 Co-working Space - Professional environment
-      </option>
-      <option value="meeting">👥 Meeting Rooms - Fully equipped</option>
-      <option value="virtual">📱 Virtual Office - Business address</option>
-      <option value="tour">🏢 Free Tour & Consultation</option>
-    </select>
+      {/* Action Cards Grid */}
+      <Grid templateColumns="1fr 1fr" gap={3}>
+        {/* Free Tour Card */}
+        <Link href="/#getinTouch">
+          <Box
+            bg="rgba(255,255,255,0.9)"
+            p={4}
+            borderRadius="lg"
+            boxShadow="0 8px 25px rgba(0,0,0,0.1)"
+            border="1px solid"
+            borderColor="rgba(255,255,255,0.3)"
+            backdropFilter="blur(8px)"
+            textAlign="center"
+            cursor="pointer"
+            transition="all 0.3s"
+            _hover={{
+              transform: "translateY(-5px)",
+              boxShadow: "0 15px 35px rgba(0,0,0,0.2)",
+              bg: "rgba(255,255,255,1)",
+            }}
+            h="120px"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <Text fontSize="2xl" mb={2}>
+              🏢
+            </Text>
+            <Text fontSize="sm" fontWeight="bold" color="gray.800">
+              Free Tour
+            </Text>
+            <Text fontSize="xs" color="gray.600">
+              Visit & explore
+            </Text>
+          </Box>
+        </Link>
 
-    <Button
-      bg="orange.500"
-      color="white"
-      _hover={{ bg: "orange.600", transform: "scale(1.02)" }}
-      transition="all 0.2s"
-      size="lg"
-      fontWeight="bold"
-      borderRadius="xl"
-      boxShadow="lg"
-    >
-      🚀 Claim Your Spot Now
-    </Button>
+        {/* WhatsApp Chat Card */}
+        <Box
+          bg="rgba(255,255,255,0.9)"
+          p={4}
+          borderRadius="lg"
+          boxShadow="0 8px 25px rgba(0,0,0,0.1)"
+          border="1px solid"
+          borderColor="rgba(255,255,255,0.3)"
+          backdropFilter="blur(8px)"
+          textAlign="center"
+          cursor="pointer"
+          transition="all 0.3s"
+          _hover={{
+            transform: "translateY(-5px)",
+            boxShadow: "0 15px 35px rgba(0,0,0,0.2)",
+            bg: "rgba(255,255,255,1)",
+          }}
+          h="120px"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          onClick={handleWhatsAppContact}
+        >
+          <Text fontSize="2xl" mb={2}>
+            💬
+          </Text>
+          <Text fontSize="sm" fontWeight="bold" color="gray.800">
+            WhatsApp
+          </Text>
+          <Text fontSize="xs" color="gray.600">
+            Instant chat
+          </Text>
+        </Box>
 
-    <Box fontSize="xs" color="gray.600" textAlign="center">
-      <Text fontWeight="bold" color="green.600" mb={1}>
-        ✅ Instant confirmation • ✅ No hidden fees • ✅ Cancel anytime
-      </Text>
-      <Text fontSize="xs" color="gray.500">
-        Join 500+ professionals who chose Warangal's #1 co-working space
-      </Text>
-    </Box>
-  </Flex>
-);
+        {/* Call Now Card */}
+        <Box
+          bg="rgba(255,255,255,0.9)"
+          p={4}
+          borderRadius="lg"
+          boxShadow="0 8px 25px rgba(0,0,0,0.1)"
+          border="1px solid"
+          borderColor="rgba(255,255,255,0.3)"
+          backdropFilter="blur(8px)"
+          textAlign="center"
+          cursor="pointer"
+          transition="all 0.3s"
+          _hover={{
+            transform: "translateY(-5px)",
+            boxShadow: "0 15px 35px rgba(0,0,0,0.2)",
+            bg: "rgba(255,255,255,1)",
+          }}
+          h="120px"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          onClick={handleCallNow}
+        >
+          <Text fontSize="2xl" mb={2}>
+            📞
+          </Text>
+          <Text fontSize="sm" fontWeight="bold" color="gray.800">
+            Call Now
+          </Text>
+          <Text fontSize="xs" color="gray.600">
+            +91 94946 44848
+          </Text>
+        </Box>
+
+        {/* Book Online Card */}
+        <Link href="/#hourly-packages">
+          <Box
+            bg="linear-gradient(135deg, rgba(255,165,0,0.9) 0%, rgba(255,140,0,1) 100%)"
+            color="white"
+            p={4}
+            borderRadius="lg"
+            boxShadow="0 8px 25px rgba(255,165,0,0.3)"
+            textAlign="center"
+            cursor="pointer"
+            transition="all 0.3s"
+            _hover={{
+              transform: "translateY(-5px)",
+              boxShadow: "0 15px 35px rgba(255,165,0,0.4)",
+            }}
+            h="120px"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <Text fontSize="2xl" mb={2}>
+              🚀
+            </Text>
+            <Text fontSize="sm" fontWeight="bold">
+              Book Online
+            </Text>
+            <Text fontSize="xs" opacity={0.9}>
+              Starting ₹199
+            </Text>
+          </Box>
+        </Link>
+      </Grid>
+
+      {/* Trust Indicators */}
+      <Box
+        bg="rgba(255,255,255,0.8)"
+        p={3}
+        borderRadius="lg"
+        textAlign="center"
+        fontSize="xs"
+        color="gray.700"
+        backdropFilter="blur(8px)"
+      >
+        <Text fontWeight="bold" color="green.600" mb={1}>
+          ✅ Instant confirmation • ✅ No hidden fees • ✅ Cancel anytime
+        </Text>
+        <Text fontSize="xs" color="gray.500">
+          Join 500+ professionals who chose Warangal's #1 co-working space
+        </Text>
+      </Box>
+    </Flex>
+  );
+};
 
 const ServiceCard = ({
   icon,
@@ -184,7 +266,12 @@ const ServiceCard = ({
     <Text fontSize="3xl" mb={2}>
       {icon}
     </Text>
-    <Text fontSize="lg" fontWeight="bold" mb={2} textShadow="0 1px 2px rgba(0,0,0,0.3)">
+    <Text
+      fontSize="lg"
+      fontWeight="bold"
+      mb={2}
+      textShadow="0 1px 2px rgba(0,0,0,0.3)"
+    >
       {title}
     </Text>
     <Text
@@ -214,14 +301,7 @@ const Banner = () => {
       maxW="100vw"
     >
       {/* Enhanced Professional Wave Background */}
-      <Box
-        position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        bottom={0}
-        zIndex={0}
-      >
+      <Box position="absolute" top={0} left={0} right={0} bottom={0} zIndex={0}>
         {/* Primary Wave Layer */}
         <svg
           viewBox="0 0 1440 320"
@@ -247,7 +327,7 @@ const Banner = () => {
             d="M0,160L24,165.3C48,171,96,181,144,176C192,171,240,149,288,144C336,139,384,149,432,165.3C480,181,528,203,576,197.3C624,192,672,160,720,154.7C768,149,816,171,864,186.7C912,203,960,213,1008,208C1056,203,1104,181,1152,165.3C1200,149,1248,139,1296,144C1344,149,1392,171,1416,181.3L1440,192L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
           />
         </svg>
-        
+
         {/* Secondary Wave Layer */}
         <svg
           viewBox="0 0 1440 320"
@@ -398,7 +478,7 @@ const Banner = () => {
               transform: translateY(-40px) translateX(5px) rotate(270deg) scale(1.05); 
             }
           }
-          
+
           @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
@@ -427,79 +507,78 @@ const Banner = () => {
         >
           {/* Main Heading */}
           <Box>
-            <Text
-              fontSize={{ base: 16, md: 20, lg: 24 }}
-              fontWeight="600"
-              color="rgba(255,255,255,0.95)"
-              lineHeight="1.2"
-              mb={2}
-              letterSpacing="1px"
-              textTransform="uppercase"
-              display="flex"
+            <Box
+              bg="rgba(255,255,255,0.15)"
+              color="white"
+              px={4}
+              py={2}
+              borderRadius="full"
+              fontSize={{ base: "sm", md: "md" }}
+              fontWeight="bold"
+              whiteSpace="nowrap"
+              boxShadow="0 6px 20px rgba(0,0,0,0.3)"
+              backdropFilter="blur(12px)"
+              border="1px solid rgba(255,255,255,0.3)"
+              display="inline-flex"
               alignItems="center"
               gap={2}
-              textShadow="0 2px 8px rgba(0,0,0,0.4)"
+              mb={3}
             >
               🏢 Premium Workspace Solutions
-            </Text>
+            </Box>
             <Text
-              fontSize={{ base: 42, md: 64, lg: 76 }}
+              fontSize={{ base: 48, md: 72, lg: 88 }}
               fontWeight="900"
-              lineHeight="0.85"
-              mb={4}
-              background="linear-gradient(135deg, #ffffff 0%, #f8fafc 20%, #e2e8f0 40%, #cbd5e1 60%, #94a3b8 80%, #64748b 100%)"
+              lineHeight="0.9"
+              mb={3}
+              background="linear-gradient(135deg, #ffffff 0%, #f1f5f9 25%, #e2e8f0 50%, #cbd5e1 75%, #94a3b8 100%)"
               backgroundClip="text"
               color="transparent"
-              fontFamily="system-ui, -apple-system, sans-serif"
-              letterSpacing="-3px"
-              textShadow="0 12px 24px rgba(0,0,0,0.4)"
+              fontFamily="'Inter', system-ui, -apple-system, sans-serif"
+              letterSpacing="-4px"
+              textShadow="0 8px 16px rgba(0,0,0,0.5)"
               position="relative"
-              _before={{
-                content: '""',
-                position: "absolute",
-                top: "3px",
-                left: "3px",
-                right: "0",
-                bottom: "0",
-                background: "rgba(0,0,0,0.3)",
-                backgroundClip: "text",
-                zIndex: -1,
-              }}
             >
               Secure Studio
             </Text>
-            <Flex
-              direction={{ base: "column", md: "row" }}
-              align={{ base: "flex-start", md: "center" }}
-              gap={{ base: 2, md: 4 }}
-              mb={4}
-            >
+            <Box mb={6}>
               <Text
-                fontSize={{ base: 20, md: 26, lg: 30 }}
-                fontWeight="700"
+                fontSize={{ base: 22, md: 28, lg: 32 }}
+                fontWeight="600"
                 color="rgba(255,255,255,0.95)"
-                lineHeight="1.2"
+                lineHeight="1.3"
                 letterSpacing="0.5px"
                 textShadow="0 3px 6px rgba(0,0,0,0.4)"
+                mb={3}
               >
                 Your Success Hub in Warangal
               </Text>
-              <Box
-                bg="rgba(255,255,255,0.2)"
-                color="white"
-                px={3}
-                py={1}
-                borderRadius="full"
-                fontSize={{ base: "xs", md: "sm" }}
-                fontWeight="bold"
-                whiteSpace="nowrap"
-                boxShadow="0 6px 20px rgba(0,0,0,0.3)"
-                backdropFilter="blur(12px)"
-                border="1px solid rgba(255,255,255,0.3)"
-              >
-                ⚡ Starting at ₹199!
-              </Box>
-            </Flex>
+              <Flex gap={3} wrap="wrap" align="center">
+                <Box
+                  bg="linear-gradient(135deg, rgba(255,165,0,0.9) 0%, rgba(255,140,0,1) 100%)"
+                  color="white"
+                  px={4}
+                  py={2}
+                  borderRadius="full"
+                  fontSize={{ base: "sm", md: "md" }}
+                  fontWeight="bold"
+                  whiteSpace="nowrap"
+                  boxShadow="0 8px 25px rgba(255,165,0,0.4)"
+                  backdropFilter="blur(12px)"
+                  border="1px solid rgba(255,255,255,0.3)"
+                  animation="pulse 2s infinite"
+                >
+                  🔥 Starting at ₹199 only!
+                </Box>
+                <Text
+                  fontSize={{ base: "sm", md: "md" }}
+                  color="rgba(255,255,255,0.85)"
+                  fontWeight="medium"
+                >
+                  ⚡ Quick setup in 15 minutes
+                </Text>
+              </Flex>
+            </Box>
           </Box>
 
           {/* Service Cards Grid */}
@@ -508,6 +587,7 @@ const Banner = () => {
               base: "1fr",
               md: "repeat(2, 1fr)",
               lg: "repeat(3, 1fr)",
+              xl: "repeat(5, 1fr)",
             }}
             gap={4}
             w="100%"
@@ -515,76 +595,89 @@ const Banner = () => {
             <ServiceCard
               icon="🕐"
               title="Hourly Office"
-              price="₹200/hr"
+              price="₹199/hr"
               description="Perfect for meetings & calls"
             />
             <ServiceCard
               icon="🌙"
               title="Evening Office"
-              price="₹1,500/mo"
+              price="₹1,499/mo"
               description="Student-friendly evening access"
               highlight={true}
             />
             <ServiceCard
               icon="🏢"
               title="Co-working"
-              price="From ₹3,000"
+              price="From ₹1,999"
               description="Professional workspace"
+            />
+            <ServiceCard
+              icon="📱"
+              title="Virtual Office"
+              price="₹1,499/mo"
+              description="Business address solution"
+            />
+            <ServiceCard
+              icon="👥"
+              title="Meeting Rooms"
+              price="₹350/hr"
+              description="Fully equipped spaces"
             />
           </Grid>
 
           {/* CTA Buttons */}
-          <Flex gap={4} wrap="wrap" w="100%">
+          <Flex gap={4} wrap="wrap" w="100%" mb={6}>
             <Link href="/#hourly-packages">
               <Button
-                bg="linear-gradient(135deg, rgba(255,165,0,0.9) 0%, rgba(255,140,0,1) 100%)"
+                bg="linear-gradient(135deg, rgba(16,185,129,1) 0%, rgba(5,150,105,1) 100%)"
                 color="white"
-                size="lg"
+                size="xl"
                 fontWeight="bold"
-                borderRadius="xl"
-                boxShadow="0 10px 30px rgba(255,165,0,0.4)"
-                px={8}
-                py={6}
-                fontSize="md"
+                borderRadius="2xl"
+                boxShadow="0 12px 35px rgba(16,185,129,0.4)"
+                px={10}
+                py={8}
+                fontSize="lg"
                 backdropFilter="blur(10px)"
-                border="1px solid rgba(255,255,255,0.2)"
+                border="2px solid rgba(255,255,255,0.2)"
                 _hover={{
-                  bg: "linear-gradient(135deg, rgba(255,165,0,1) 0%, rgba(255,120,0,1) 100%)",
-                  transform: "translateY(-3px)",
-                  boxShadow: "0 15px 40px rgba(255,165,0,0.5)",
+                  bg: "linear-gradient(135deg, rgba(5,150,105,1) 0%, rgba(4,120,87,1) 100%)",
+                  transform: "translateY(-4px)",
+                  boxShadow: "0 20px 50px rgba(16,185,129,0.5)",
                 }}
                 transition="all 0.3s"
               >
-                🔥 Book Now - Starting ₹199!
+                🚀 Book Now - ₹199 Special!
               </Button>
             </Link>
             <Link href="/#getinTouch">
               <Button
-                bg="rgba(255,255,255,0.15)"
+                bg="rgba(255,255,255,0.1)"
                 color="white"
-                size="lg"
+                size="xl"
                 borderWidth="2px"
-                borderColor="rgba(255,255,255,0.4)"
-                px={6}
-                py={6}
-                fontSize="md"
+                borderColor="rgba(255,255,255,0.5)"
+                px={8}
+                py={8}
+                fontSize="lg"
                 fontWeight="bold"
-                backdropFilter="blur(12px)"
-                boxShadow="0 8px 25px rgba(255,255,255,0.1)"
+                borderRadius="2xl"
+                backdropFilter="blur(15px)"
+                boxShadow="0 10px 30px rgba(255,255,255,0.1)"
                 _hover={{
-                  bg: "rgba(255,255,255,0.25)",
-                  transform: "translateY(-3px)",
-                  boxShadow: "0 12px 35px rgba(255,255,255,0.2)",
-                  borderColor: "rgba(255,255,255,0.6)",
+                  bg: "rgba(255,255,255,0.2)",
+                  transform: "translateY(-4px)",
+                  boxShadow: "0 15px 40px rgba(255,255,255,0.2)",
+                  borderColor: "rgba(255,255,255,0.8)",
                 }}
                 transition="all 0.3s"
               >
-                📞 Free Tour
+                📞 Schedule Free Tour
               </Button>
             </Link>
           </Flex>
 
-          {/* Enhanced Value Proposition */}
+          {/* Value Proposition - Simplified */}
           <Box
             bg="rgba(255,255,255,0.12)"
             p={6}
@@ -593,88 +686,106 @@ const Banner = () => {
             border="1px solid"
             borderColor="rgba(255,255,255,0.25)"
             backdropFilter="blur(15px)"
+            textAlign="center"
           >
             <Text
               fontSize={{ base: 18, md: 20 }}
               fontWeight="bold"
               color="white"
-              mb={4}
+              mb={3}
               textShadow="0 2px 4px rgba(0,0,0,0.3)"
             >
-              🚀 <strong>Why Choose SecureStudio?</strong>
+              💰 <strong>Save 70% on Traditional Office Costs</strong>
             </Text>
-            <Grid
-              templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
-              gap={4}
+            <Text
+              fontSize="16px"
+              color="rgba(255,255,255,0.9)"
+              fontWeight="medium"
+              textShadow="0 1px 2px rgba(0,0,0,0.3)"
             >
-              <Flex align="center" gap={3}>
-                <Text fontSize="18px" color="rgba(255,255,255,0.9)" fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                  🏢 <strong>Co-working Spaces</strong> - Professional environment
-                </Text>
-              </Flex>
-              <Flex align="center" gap={3}>
-                <Text fontSize="18px" color="rgba(255,255,255,0.9)" fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                  ⏰ <strong>Hourly Offices</strong> - Pay per use flexibility
-                </Text>
-              </Flex>
-              <Flex align="center" gap={3}>
-                <Text fontSize="18px" color="rgba(255,255,255,0.9)" fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                  🌙 <strong>Evening Plans</strong> - Student-friendly rates
-                </Text>
-              </Flex>
-              <Flex align="center" gap={3}>
-                <Text fontSize="18px" color="rgba(255,255,255,0.9)" fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                  👥 <strong>Meeting Rooms</strong> - Fully equipped spaces
-                </Text>
-              </Flex>
-              <Flex align="center" gap={3}>
-                <Text fontSize="18px" color="rgba(255,255,255,0.9)" fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                  📱 <strong>Virtual Office</strong> - Business address solution
-                </Text>
-              </Flex>
-              <Flex align="center" gap={3}>
-                <Text fontSize="18px" color="rgba(255,255,255,0.9)" fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                  💰 <strong>Save 70%</strong> - Compared to traditional offices
-                </Text>
-              </Flex>
-            </Grid>
+              Flexible workspace solutions for every business need •
+              Professional environment • Premium amenities
+            </Text>
           </Box>
 
           {/* Enhanced Trust Indicators */}
-          <Box>
-            <Flex align="center" gap={4} mb={3} wrap="wrap">
-              <Text fontSize="sm" fontWeight="bold" color="rgba(255,255,255,0.95)" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                🏆 Warangal's #1 Co-working Space
-              </Text>
-              <Text fontSize="sm" color="rgba(255,255,255,0.95)" fontWeight="bold" textShadow="0 1px 2px rgba(0,0,0,0.3)">
-                🔥 500+ Happy Members
-              </Text>
+          <Box
+            bg="rgba(255,255,255,0.08)"
+            p={4}
+            borderRadius="xl"
+            backdropFilter="blur(10px)"
+            border="1px solid rgba(255,255,255,0.15)"
+          >
+            <Flex
+              align="center"
+              gap={6}
+              mb={3}
+              wrap="wrap"
+              justify="space-between"
+            >
+              <Flex align="center" gap={2}>
+                <Text
+                  fontSize="lg"
+                  color="rgba(255,255,255,0.95)"
+                  fontWeight="bold"
+                >
+                  🏆
+                </Text>
+                <Box>
+                  <Text
+                    fontSize="sm"
+                    fontWeight="bold"
+                    color="rgba(255,255,255,0.95)"
+                  >
+                    Warangal's #1 Co-working
+                  </Text>
+                  <Text fontSize="xs" color="rgba(255,255,255,0.75)">
+                    500+ Happy Members
+                  </Text>
+                </Box>
+              </Flex>
+              <Flex align="center" gap={2}>
+                <Text fontSize="lg" color="rgba(255,255,255,0.95)">
+                  ⭐
+                </Text>
+                <Box>
+                  <Text
+                    fontSize="sm"
+                    fontWeight="bold"
+                    color="rgba(255,255,255,0.95)"
+                  >
+                    4.9/5 Rating
+                  </Text>
+                  <Text fontSize="xs" color="rgba(255,255,255,0.75)">
+                    Verified Reviews
+                  </Text>
+                </Box>
+              </Flex>
             </Flex>
             <Flex
               align="center"
-              gap={3}
-              fontSize="sm"
-              color="rgba(255,255,255,0.85)"
+              gap={4}
+              fontSize="xs"
+              color="rgba(255,255,255,0.8)"
               wrap="wrap"
+              justify="center"
             >
-              <Text fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">⭐ 4.9/5 Rating</Text>
+              <Text fontWeight="medium">✅ Premium Amenities</Text>
               <Text>•</Text>
-              <Text fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">✅ Premium Amenities</Text>
+              <Text fontWeight="medium">✅ 24/7 Access</Text>
               <Text>•</Text>
-              <Text fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">✅ 24/7 Access</Text>
-              <Text>•</Text>
-              <Text fontWeight="medium" textShadow="0 1px 2px rgba(0,0,0,0.3)">✅ Government Registered</Text>
+              <Text fontWeight="medium">✅ Government Registered</Text>
             </Flex>
           </Box>
         </Flex>
 
-        {/* Right Contact Form */}
+        {/* Right Quick Actions */}
         <Flex
           w={{ base: "100%", xl: "35%" }}
           alignItems="flex-start"
           justifyContent="center"
         >
-          <ContactForm />
+          <QuickActionCards />
         </Flex>
       </Flex>
     </Box>

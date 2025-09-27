@@ -1,17 +1,16 @@
 import { Flex, Text, Card, Button, Box, Badge, Span } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
+import { useState } from "react";
+import { ContactModal } from "../ui/modal";
 
 const HourlyPackages = () => {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuthStore();
+    const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
     const handleBookNow = () => {
-        if (isAuthenticated) {
-            navigate("/subscriptions/book");
-        } else {
-            navigate("/auth");
-        }
+        setIsContactModalOpen(true);
     };
 
     const hourlyOfficePlans = [
@@ -148,14 +147,65 @@ const HourlyPackages = () => {
             category: "For Remote Professionals",
         },
         {
-            name: "4 Members Cabin",
-            price: "₹20,000",
-            duration: "onwards",
-            details: "Premium Business Address",
-            features:
-                "Address for Official Use • Courier Handling & Forwarding • Enquiry Support • Flexible Plan Upgrade",
+            name: "Custom Business Plan",
+            price: "Let's Discuss",
+            duration: "Tailored to your needs",
+            features: "Dedicated support & flexible terms",
             description:
-                "Dedicated private cabin for small teams with all premium amenities",
+                "Customized solutions designed to meet your unique business requirements.",
+            category: "Business Solutions",
+            popular: true,
+        },
+    ];
+    const coworkingPackages = [
+        {
+            name: "🪑 Open Desk",
+            price: "₹3,999",
+            duration: "/ month",
+            details: "Flexible hot-desk in shared environment",
+            features:
+                "⚡ High-speed WiFi • ❄️ AC & Climate Control • 🔌 Power outlets • 🖨️ Printing facility • ☕ Complimentary beverages",
+            description:
+                "Perfect for freelancers and digital nomads who need a professional workspace with flexibility",
+            category: "Co-working Space",
+            popular: true,
+            whoIsThisFor: "Freelancers, Digital Nomads, Remote Workers",
+        },
+        {
+            name: "🏷️ Private Desk",
+            price: "₹5,000",
+            duration: "/ month",
+            details: "Your dedicated personal workspace",
+            features:
+                "📦 Personal storage locker • 🔐 Lockable drawer • 📋 Personalized name plate • 🚀 Priority access • 📞 Phone booth access",
+            description:
+                "Your own dedicated space in a collaborative environment - perfect for consistent daily users",
+            category: "Co-working Space",
+            popular: false,
+            whoIsThisFor: "Regular Users, Professionals, Small Business Owners",
+        },
+        {
+            name: "📱 Virtual Office",
+            price: "₹1,500",
+            duration: "/ month",
+            details: "Professional business address & services",
+            features:
+                "📮 Mail handling & forwarding • 📋 Business registration support • 📞 Reception services • 🏢 Professional address",
+            description:
+                "Establish your business presence without physical office space - ideal for online businesses",
+            category: "Virtual Services",
+            popular: false,
+            whoIsThisFor: "Startups, Online Businesses, Remote Companies",
+        },
+        {
+            name: "🏢 Private Cabins",
+            price: "₹20,000",
+            duration: "/ month onwards",
+            details: "Fully furnished private office space",
+            features:
+                "🏢 Premium business address • 📦 Courier handling & forwarding • 📞 Dedicated phone support • 🔧 Flexible upgrade options • 🛡️ Enhanced security",
+            description:
+                "Complete private office solution for teams requiring privacy and dedicated space",
             category: "Private Office",
             popular: false,
             whoIsThisFor: "Small Teams, Startups, Professional Services",
@@ -331,7 +381,12 @@ const HourlyPackages = () => {
             </Flex>
 
             {/* On-Demand Meeting Rooms Section */}
-            <Flex direction="column" w="100%" align="center">
+            <Flex
+                direction="column"
+                w="100%"
+                align="center"
+                id="ondemand-packages"
+            >
                 <Box textAlign="center" mb={6}>
                     <Text
                         fontSize={[20, 26, 34]}
@@ -455,7 +510,8 @@ const HourlyPackages = () => {
                         fontWeight="semibold"
                         mb={2}
                     >
-                        Tailored packages for specific business needs
+                        Tailored packages for specific business needs, including
+                        custom plans.
                     </Text>
                 </Box>
                 <Flex
@@ -466,6 +522,185 @@ const HourlyPackages = () => {
                     maxW="1400px"
                 >
                     {specialPackages.map((plan) => (
+                        <Card.Root
+                            key={plan.name}
+                            borderRadius={20}
+                            boxShadow="lg"
+                            position="relative"
+                            bg="white"
+                            _hover={{
+                                transform: "translateY(-5px)",
+                                boxShadow: "2xl",
+                            }}
+                            transition="all 0.3s ease"
+                            w={["100%", "320px"]}
+                            border={plan.popular ? "2px solid" : "1px solid"}
+                            borderColor={plan.popular ? "support" : "gray.200"}
+                        >
+                            {plan.popular && (
+                                <Badge
+                                    position="absolute"
+                                    top={-2}
+                                    right={4}
+                                    bg="support"
+                                    color="white"
+                                    px={3}
+                                    py={1}
+                                    borderRadius="full"
+                                    fontSize="xs"
+                                    fontWeight="bold"
+                                >
+                                    MOST POPULAR
+                                </Badge>
+                            )}
+                            <Card.Body gap={4} p={6}>
+                                <Badge
+                                    bg="primary"
+                                    color="white"
+                                    px={3}
+                                    py={1}
+                                    borderRadius="full"
+                                    fontSize="xs"
+                                    fontWeight="bold"
+                                    alignSelf="flex-start"
+                                >
+                                    {plan.category}
+                                </Badge>
+                                <Flex
+                                    direction="column"
+                                    align="center"
+                                    textAlign="center"
+                                >
+                                    <Text
+                                        fontSize="xl"
+                                        fontWeight="bold"
+                                        color="dark"
+                                        mb={2}
+                                    >
+                                        {plan.name}
+                                    </Text>
+                                    <Flex align="baseline" mb={3}>
+                                        <Text
+                                            fontSize="3xl"
+                                            fontWeight="bold"
+                                            color="primary"
+                                        >
+                                            {plan.price}
+                                        </Text>
+                                        <Text
+                                            fontSize="md"
+                                            color="gray.600"
+                                            ml={1}
+                                        >
+                                            {plan.duration}
+                                        </Text>
+                                    </Flex>
+
+                                    {plan.details && (
+                                        <Text
+                                            fontSize="sm"
+                                            fontWeight="semibold"
+                                            color="secondary"
+                                            mb={2}
+                                        >
+                                            {plan.details}
+                                        </Text>
+                                    )}
+
+                                    {plan.features && (
+                                        <Text
+                                            fontSize="sm"
+                                            color="gray.600"
+                                            mb={2}
+                                        >
+                                            {plan.features}
+                                        </Text>
+                                    )}
+
+                                    <Text fontSize="sm" color="gray.700" mb={3}>
+                                        {plan.description}
+                                    </Text>
+
+                                    {plan.whoIsThisFor && (
+                                        <Box
+                                            bg="green.50"
+                                            p={2}
+                                            borderRadius="md"
+                                            mb={3}
+                                            w="100%"
+                                        >
+                                            <Text
+                                                fontSize="xs"
+                                                fontWeight="bold"
+                                                color="green.700"
+                                                mb={1}
+                                            >
+                                                Perfect for:
+                                            </Text>
+                                            <Text
+                                                fontSize="xs"
+                                                color="green.600"
+                                            >
+                                                {plan.whoIsThisFor}
+                                            </Text>
+                                        </Box>
+                                    )}
+                                </Flex>
+
+                                <Button
+                                    bg={plan.popular ? "support" : "primary"}
+                                    color="white"
+                                    w="full"
+                                    onClick={handleBookNow}
+                                    _hover={{
+                                        bg: plan.popular
+                                            ? "red.600"
+                                            : "blue.600",
+                                        transform: "scale(1.05)",
+                                    }}
+                                    transition="all 0.2s"
+                                >
+                                    Book Now
+                                </Button>
+                            </Card.Body>
+                        </Card.Root>
+                    ))}
+                </Flex>
+            </Flex>
+
+            {/* Coworking Packages */}
+            <Flex direction="column" w="100%" align="center" id="plans">
+                <Box textAlign="center" mb={6}>
+                    <Text
+                        fontSize={[20, 26, 34]}
+                        fontWeight="bold"
+                        color="dark"
+                        mb={3}
+                    >
+                        🏢 Premium Co-working Space Solutions
+                    </Text>
+                    <Text
+                        fontSize="lg"
+                        color="primary"
+                        fontWeight="semibold"
+                        mb={2}
+                    >
+                        Professional workspace environments designed for growth
+                        and collaboration
+                    </Text>
+                    <Text fontSize="md" color="gray.600">
+                        From flexible hot desks to private cabins - find your
+                        perfect workspace solution
+                    </Text>
+                </Box>
+                <Flex
+                    gap={6}
+                    wrap="wrap"
+                    justify="center"
+                    w="100%"
+                    maxW="1400px"
+                >
+                    {coworkingPackages.map((plan) => (
                         <Card.Root
                             key={plan.name}
                             borderRadius={20}
@@ -674,6 +909,12 @@ const HourlyPackages = () => {
                     ))}
                 </Flex>
             </Flex>
+
+            {/* Contact Modal */}
+            <ContactModal 
+                isOpen={isContactModalOpen} 
+                onClose={() => setIsContactModalOpen(false)} 
+            />
         </Flex>
     );
 };

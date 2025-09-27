@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Flex } from "@chakra-ui/react";
 import Header from "./shared/header";
 import Footer from "./shared/footer";
+import WhatsAppWidget from "../components/WhatsAppWidget";
 
 const HomeLayout = () => {
   return (
@@ -11,6 +12,7 @@ const HomeLayout = () => {
         <Outlet />
       </Flex>
       <Footer />
+      <WhatsAppWidget />
     </Flex>
   )
 };
