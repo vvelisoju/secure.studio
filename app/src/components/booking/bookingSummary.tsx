@@ -50,11 +50,21 @@ const BookingSummary: React.FC = () => {
     const { fetchAppSetting, appSetting } = useAppSettingState();
 
     useEffect(() => { fetchAppSetting() }, []);
+    
+    // Prevent rendering if appSetting is not loaded
+    if (!appSetting) {
+        return (
+            <Flex justify="center" align="center" h="200px">
+                <Spinner size="lg" />
+            </Flex>
+        );
+    }
+    
     const duration = selectedPlan?.duration;
     let bookingType = "NEW_SUBSCRIPTION";
 
     if (extendValidity) {
-        bookingType = selectedSubscription.status === "INACTIVE" ? "RENEW_SUBSCRIPTION" : "EXTEND_SUBSCRIPTION"
+        bookingType = selectedSubscription?.status === "INACTIVE" ? "RENEW_SUBSCRIPTION" : "EXTEND_SUBSCRIPTION"
     }
 
     let advance: number;
