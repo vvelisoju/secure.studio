@@ -5,8 +5,28 @@ const router = Router();
 
 // Google Auth Routes (only enabled if credentials are configured)
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.SERVER_BASE_URL) {
-  router.get("/google", passport.authenticate("google", { scope: ["profile", "email"], }));
-  router.get("/google/callback", passport.authenticate("google", { session: false }), authController.googleAuth);
+  router.get("/google", (req, res, next) => {
+    console.log("🚀 Initiating Google OAuth flow");
+    passport.authenticate("google", { scope: ["profile", "email"] })(req, res, next);
+  });
+  
+  router.get("/google/callback", (req, res, next) => {
+    console.log("📥 Google OAuth callback hit");
+    console.log("   Query params:", Object.keys(req.query));
+    passport.authenticate("google", { session: false }, (err, user, info) => {
+      if (err) {
+        console.error("❌ Google OAuth error:", err);
+        return next(err);
+      }
+      if (!user) {
+        console.error("❌ No user returned from Google OAuth");
+        return res.redirect(`${process.env.CLIENT_URL}/auth?error=oauth_failed`);
+      }
+      console.log("✅ Google OAuth authentication successful");
+      req.user = user;
+      authController.googleAuth(req, res);
+    })(req, res, next);
+  });
 } else {
   // Provide helpful error message when Google OAuth is not configured
   router.get("/google", (req, res) => {

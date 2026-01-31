@@ -194,6 +194,8 @@ class AuthController {
       const redirectUrl = `${process.env.CLIENT_URL}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${encodedUser}`;
       console.log('🔐 Google OAuth Redirect URL:', redirectUrl);
       console.log('🌐 CLIENT_URL:', process.env.CLIENT_URL);
+      console.log('🔐 Google OAuth Redirect URL:', redirectUrl);
+      console.log('🌐 CLIENT_URL:', process.env.CLIENT_URL);
       res.redirect(redirectUrl);
     } catch (error: any) {
       errorResponse(error, res)
