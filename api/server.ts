@@ -1,7 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import fs from "fs";
 import path from "path";
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import http from "http";
@@ -34,7 +36,6 @@ import invoiceSetting from "./routes/invoiceSetting";
 import passport from "passport"
 import "./auth/google"
 // import { initializeSocket } from "./services/socket"
-dotenv.config();
 
 // Create Express app and HTTP server
 const app = express();

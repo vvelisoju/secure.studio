@@ -59,7 +59,7 @@
     "typescript": "^5.7.3"
   },
   "prisma": {
-    "seed": "node prisma/seed.mjs",
+    "seed": "node prisma/seed-new.mjs",
     "schema": "prisma/schema.prisma"
   }
 }

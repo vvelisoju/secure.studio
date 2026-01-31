@@ -32,7 +32,9 @@ export class NotificationService {
             const notification: Notification = await prisma.notification.create({ data });
             if (notification.templateName) {
                 const notificationTemplate = await notificationTemplateService.findByName(notification.templateName) as NotificationTemplate;
-                if (notificationTemplate.channel.includes("EMAIL")) mailService.send(notification);
+                if (notificationTemplate && notificationTemplate.channel && notificationTemplate.channel.includes("EMAIL")) {
+                    mailService.send(notification);
+                }
                 // Add if whatsapp or inApp are included too.
             }
             return;

@@ -1,8 +1,15 @@
-import { PrismaClient, EmployeeRange, Prisma } from "@prisma/client";
-import fs from 'fs-extra';
-import path from "path";
-import { fileURLToPath } from 'url';
-import { v4 as uuidv4 } from 'uuid';
+/**
+ * Main Seed File
+ * Orchestrates all seed operations in the correct order
+ */
+
+import { PrismaClient } from "@prisma/client";
+import { seedSuperAdmins } from "./seeds/superadmin.seed.mjs";
+import { seedEmailTemplates } from "./seeds/email-templates.seed.mjs";
+import { seedNotificationTemplates, seedNotificationSchedules } from "./seeds/notification-templates.seed.mjs";
+import { seedServices } from "./seeds/services.seed.mjs";
+import { seedHolidays } from "./seeds/holidays.seed.mjs";
+import { seedAppSettings, seedInvoiceSettings } from "./seeds/app-settings.seed.mjs";
 
 // Utility function to safely convert MJML to a single-line escaped string
 const prepareMjmlForDB = (mjmlContent) => {
