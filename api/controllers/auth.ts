@@ -47,8 +47,9 @@ class AuthController {
       }
 
       // create notification record
-      const notificationData: Prisma.NotificationUncheckedCreateInput = {
-        userId: validatedData.type === "login" ? existingUser?.id : undefined,
+      const notificationData: Prisma.NotificationCreateInput = {
+        user: validatedData.type === "login" && existingUser?.id ? { connect: { id: existingUser.id } } : undefined,
+        channel: ["EMAIL"],
         placeHolders: {
           action: validatedData.type,
           name: validatedData.type === "login" ? existingUser.name : validatedData.name,
@@ -72,23 +73,30 @@ class AuthController {
       if (validatedData.type === "register") {
         const referrerId = validatedData.referralCode ? await referralMiscService.getUserIdwithReferralId(validatedData.referralCode) : undefined;
 
-        let companyId;
+        let userData: Prisma.UserUncheckedCreateInput;
         if (validatedData.accountType === "COMPANY") {
           const newCompany = await companyService.createCompany({});
-          companyId = newCompany.id;
-        }
-        const userData: Prisma.UserUncheckedCreateInput = {
-          name: validatedData.name,
-          email: validatedData.email,
-          userType: validatedData.accountType === "INDIVIDUAL" ? "USER" : "USER_ADMIN",
-          referrerId,
-          companyId
+          userData = {
+            name: validatedData.name,
+            email: validatedData.email,
+            userType: "USER_ADMIN",
+            referrerId,
+            companyId: newCompany.id
+          };
+        } else {
+          userData = {
+            name: validatedData.name,
+            email: validatedData.email,
+            userType: "USER",
+            referrerId
+          };
         }
         const user: any = await userService.createUser(userData);
 
         // create notification record
-        const notificationData: Prisma.NotificationUncheckedCreateInput = {
-          userId: user.id,
+        const notificationData: Prisma.NotificationCreateInput = {
+          user: { connect: { id: user.id } },
+          channel: ["EMAIL"],
           placeHolders: {
             name: user?.name,
             username: user?.name,
@@ -128,8 +136,9 @@ class AuthController {
       }
 
       // create notification record
-      const notificationData: Prisma.NotificationUncheckedCreateInput = {
-        userId: existingUser.id,
+      const notificationData: Prisma.NotificationCreateInput = {
+        user: { connect: { id: existingUser.id } },
+        channel: ["EMAIL"],
         placeHolders: {
           action: validatedData.type,
           name: validatedData.type === "login" ? existingUser.name : validatedData.name,
@@ -163,8 +172,9 @@ class AuthController {
         const user: any = await userService.createUser(userData);
 
         // create notification record
-        const notificationData: Prisma.NotificationUncheckedCreateInput = {
-          userId: user.id,
+        const notificationData: Prisma.NotificationCreateInput = {
+          user: { connect: { id: user.id } },
+          channel: ["EMAIL"],
           placeHolders: {
             name: user?.name,
             username: user?.name,
