@@ -191,7 +191,10 @@ class AuthController {
       const accessToken: any = await generateAccessToken(userData);
       const refreshToken: any = await generateRefreshToken(userData);
       const encodedUser = encodeURIComponent(JSON.stringify(userData));
-      res.redirect(`${process.env.CLIENT_URL}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${encodedUser}`);
+      const redirectUrl = `${process.env.CLIENT_URL}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}&user=${encodedUser}`;
+      console.log('🔐 Google OAuth Redirect URL:', redirectUrl);
+      console.log('🌐 CLIENT_URL:', process.env.CLIENT_URL);
+      res.redirect(redirectUrl);
     } catch (error: any) {
       errorResponse(error, res)
     }
