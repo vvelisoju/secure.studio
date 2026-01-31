@@ -45,7 +45,10 @@ const app = express();
 
 // Middleware
 const allowedOrigins = [
-  process.env.CLIENT_URL, // Production frontend
+  process.env.CLIENT_URL, // Production frontend (from env)
+  "https://www.secure.studio", // Production custom domain
+  "https://secure.studio", // Production custom domain (without www)
+  "https://securestudio-production.up.railway.app", // Railway domain
   "http://localhost:5000", // Development frontend
   "http://localhost:3000"  // Alternative dev port
 ].filter((origin): origin is string => typeof origin === 'string');
