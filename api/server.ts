@@ -44,7 +44,17 @@ const app = express();
 // const io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
 
 // Middleware
-app.use(cors({ origin: "*", exposedHeaders: ["Content-Disposition"] }));
+const allowedOrigins = [
+  process.env.CLIENT_URL, // Production frontend
+  "http://localhost:5000", // Development frontend
+  "http://localhost:3000"  // Alternative dev port
+].filter((origin): origin is string => typeof origin === 'string');
+
+app.use(cors({ 
+  origin: allowedOrigins.length > 0 ? allowedOrigins : "*", 
+  exposedHeaders: ["Content-Disposition"],
+  credentials: true
+}));
 app.use(morgan("dev"));
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
