@@ -29,3 +29,13 @@ export const updateInvoice: any = async (data: any): Promise<void> => {
         throw error.response
     }
 };
+
+export const createDirectInvoice: any = async (data: any): Promise<void> => {
+    try {
+        const url = `/invoice/direct`
+        const response = await axiosInstance.post(url, data);
+        return response.data;
+    } catch (error: any) {
+        throw error.response
+    }
+};

@@ -6,5 +6,6 @@ const router = Router();
 router.get("/", invoiceController.getInvoicesOfUser);
 router.get("/user", invoiceController.getAllInvoicesOfUser);
 router.put("/user", invoiceController.updateInvoicesOfUser);
+router.post("/direct", invoiceController.createDirectInvoice);
 
 export default router;

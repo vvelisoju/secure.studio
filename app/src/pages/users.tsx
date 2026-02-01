@@ -43,6 +43,7 @@ import DeleteUserAlert from "../components/users/deleteAlert";
 import Renew from "../assets/renew";
 import { updateUserStatus } from "../api/users";
 import { useSettingsStore } from "../stores/settings";
+import DirectInvoiceModal from "../components/users/directInvoiceModal";
 const Users = () => {
 
     const location = useLocation();
@@ -228,6 +229,7 @@ const Users = () => {
             </Table.Cell>
             <Table.Cell py={3} px={5}>
                 <Flex justifyContent={"end"} gap={3}>
+                    <DirectInvoiceModal user={item} />
                     {
                         item?.UserSubscriptions.length > 0 &&
                         <Tooltip openDelay={100} positioning={{ placement: "bottom" }} content="Send Email">
